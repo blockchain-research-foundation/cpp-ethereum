@@ -37,7 +37,7 @@ BOOST_FIXTURE_TEST_SUITE(FrontierBlockSuite, FrontierNoProofTestFixture)
 
 BOOST_AUTO_TEST_CASE(bStates)
 {
-	TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
 	TestBlock const& genesisBlock = testBlockchain.testGenesis();
 	OverlayDB const& genesisDB = genesisBlock.state().db();
 	BlockChain const& blockchain = testBlockchain.getInterface();
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(bStates)
 
 BOOST_AUTO_TEST_CASE(bCopyOperator)
 {
-	TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
 	TestBlock const& genesisBlock = testBlockchain.testGenesis();
 
 	OverlayDB const& genesisDB = genesisBlock.state().db();
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_CASE(bGasPricer)
 {
-	TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock(63000));
+    TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock(63000), TestBlockChain::MiningType::NoProof);
 	TestBlock const& genesisBlock = testBlockchain.testGenesis();
 	OverlayDB const& genesisDB = genesisBlock.state().db();
 	BlockChain const& blockchain = testBlockchain.getInterface();
@@ -216,7 +216,7 @@ BOOST_AUTO_TEST_CASE(bGasPricer)
 
 BOOST_AUTO_TEST_CASE(bGetReceiptOverflow)
 {
-	TestBlockChain bc;
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
 	TestBlock const& genesisBlock = bc.testGenesis();
 	OverlayDB const& genesisDB = genesisBlock.state().db();
 	BlockChain const& blockchain = bc.getInterface();
@@ -229,7 +229,7 @@ class ConstantinopleTransitionTestFixture: public TestOutputHelperFixture
 public:
 	ConstantinopleTransitionTestFixture():
 		networkSelector(eth::Network::ConstantinopleTransitionTest),
-		testBlockchain(TestBlockChain::defaultGenesisBlock()),
+        testBlockchain(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof),
 		genesisBlock(testBlockchain.testGenesis()),
 		genesisDB(genesisBlock.state().db()),
 		blockchain(testBlockchain.getInterface())

@@ -38,7 +38,7 @@ BOOST_FIXTURE_TEST_SUITE(BlockChainFrontierSuite, FrontierNoProofTestFixture)
 BOOST_AUTO_TEST_CASE(output)
 {
     TestBlock genesis = TestBlockChain::defaultGenesisBlock();
-    TestBlockChain bc(genesis);
+    TestBlockChain bc(genesis, TestBlockChain::MiningType::NoProof);
 
     TestBlock block;
     block.mine(bc);
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(opendb)
 
 BOOST_AUTO_TEST_CASE(Mining_1_mineBlockWithTransaction)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
     TestTransaction tr = TestTransaction::defaultTransaction(1); //nonce = 1
     TestBlock block;
     block.addTransaction(tr);
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(Mining_1_mineBlockWithTransaction)
 
 BOOST_AUTO_TEST_CASE(Mining_2_mineUncles)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
     TestTransaction tr = TestTransaction::defaultTransaction(1); //nonce = 1
     TestBlock block;
     block.addTransaction(tr);
@@ -178,7 +178,7 @@ See https://github.com/ethereum/cpp-ethereum/issues/3059.
 
 BOOST_AUTO_TEST_CASE(insertWithoutParent)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
     TestTransaction tr = TestTransaction::defaultTransaction();
     TestBlock block;
     block.mine(bc);
@@ -203,7 +203,7 @@ BOOST_FIXTURE_TEST_SUITE(BlockChainMainNetworkSuite, MainNetworkNoProofTestFixtu
 
 BOOST_AUTO_TEST_CASE(Mining_5_BlockFutureTime)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
 
     TestBlock uncleBlock;
     uncleBlock.mine(bc);
@@ -244,7 +244,7 @@ BOOST_AUTO_TEST_CASE(attemptImport)
     //FutureTimeKnown
     //Malformed
 
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
 
     TestTransaction tr = TestTransaction::defaultTransaction();
     TestBlock block;
@@ -270,7 +270,7 @@ BOOST_AUTO_TEST_CASE(attemptImport)
 
 BOOST_AUTO_TEST_CASE(insert)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
     TestTransaction tr = TestTransaction::defaultTransaction();
     TestBlock block;
     block.addTransaction(tr);
@@ -300,7 +300,7 @@ BOOST_AUTO_TEST_CASE(insert)
 
 BOOST_AUTO_TEST_CASE(insertException)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
     BlockChain& bcRef = bc.interfaceUnsafe();
 
     TestTransaction tr = TestTransaction::defaultTransaction();
@@ -317,7 +317,7 @@ BOOST_AUTO_TEST_CASE(rescue, *utf::expected_failures(1))
 {
     cout << "BlockChainMainNetworkSuite/rescue test - failure is expected\n";
 
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
 
     {
         TestTransaction tr = TestTransaction::defaultTransaction();
@@ -350,7 +350,7 @@ BOOST_AUTO_TEST_CASE(rescue, *utf::expected_failures(1))
 
 BOOST_AUTO_TEST_CASE(updateStats)
 {
-    TestBlockChain bc(TestBlockChain::defaultGenesisBlock());
+    TestBlockChain bc(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof);
     BlockChain& bcRef = bc.interfaceUnsafe();
 
     BlockChain::Statistics stat = bcRef.usage();

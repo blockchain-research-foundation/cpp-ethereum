@@ -35,8 +35,8 @@ BOOST_FIXTURE_TEST_SUITE(BlockQueueSuite, MainNetworkNoProofTestFixture)
 BOOST_AUTO_TEST_CASE(BlockQueueImport)
 {
     TestBlock genesisBlock = TestBlockChain::defaultGenesisBlock();
-    TestBlockChain blockchain(genesisBlock);
-    TestBlockChain blockchain2(genesisBlock);
+    TestBlockChain blockchain(genesisBlock, TestBlockChain::MiningType::NoProof);
+    TestBlockChain blockchain2(genesisBlock, TestBlockChain::MiningType::NoProof);
 
     TestBlock block1;
     TestTransaction transaction1 = TestTransaction::defaultTransaction(1);

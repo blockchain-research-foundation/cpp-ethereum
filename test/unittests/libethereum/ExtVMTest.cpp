@@ -31,7 +31,7 @@ class ExtVMTestFixture : public TestOutputHelperFixture
 public:
     ExtVMTestFixture()
       : networkSelector(eth::Network::ConstantinopleTransitionTest),
-        testBlockchain(TestBlockChain::defaultGenesisBlock()),
+        testBlockchain(TestBlockChain::defaultGenesisBlock(), TestBlockChain::MiningType::NoProof),
         genesisBlock(testBlockchain.testGenesis()),
         genesisDB(genesisBlock.state().db()),
         blockchain(testBlockchain.getInterface())

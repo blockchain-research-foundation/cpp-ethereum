@@ -28,6 +28,9 @@
 #include <libethereum/ValidationSchemes.h>
 #include <test/tools/libtesteth/BlockChainHelper.h>
 #include <test/tools/libtesteth/TestHelper.h>
+#include <libethashseal/Ethash.h>
+#include <libethcore/SealEngine.h>
+
 using namespace std;
 using namespace json_spirit;
 using namespace dev;
@@ -487,16 +490,19 @@ void TestBlock::populateFrom(TestBlock const& _original)
     m_dirty = false;
 }
 
-TestBlockChain::TestBlockChain(TestBlock const& _genesisBlock)
+TestBlockChain::TestBlockChain(TestBlock const& _genesisBlock, MiningType _mining)
 {
-    reset(_genesisBlock);
+    reset(_genesisBlock, _mining);
 }
 
-void TestBlockChain::reset(TestBlock const& _genesisBlock)
+void TestBlockChain::reset(TestBlock const& _genesisBlock, MiningType _mining)
 {
     m_tempDirBlockchain.reset(new TransientDirectory);
-    ChainParams p = ChainParams(genesisInfo(TestBlockChain::s_sealEngineNetwork),
-        _genesisBlock.bytes(), _genesisBlock.accountMap());
+    ChainParams p = ChainParams(genesisInfo(TestBlockChain::s_sealEngineNetwork), _genesisBlock.bytes(), _genesisBlock.accountMap());
+    if (_mining == MiningType::Ethash)
+        p.sealEngineName = eth::Ethash::name();
+    else if (_mining == MiningType::NoProof)
+        p.sealEngineName = eth::NoProof::name();
 
     m_blockChain.reset(new BlockChain(p, m_tempDirBlockchain.get()->path(), WithExisting::Kill));
     if (!m_blockChain->isKnown(BlockHeader::headerHashFromBlock(_genesisBlock.bytes())))

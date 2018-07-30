@@ -137,10 +137,15 @@ private:
 class TestBlockChain
 {
 public:
-    TestBlockChain() : TestBlockChain(defaultGenesisBlock()) {}
-    TestBlockChain(TestBlock const& _genesisBlock);
+    enum class MiningType
+    {
+        Ethash,
+        NoProof
+    };
+    TestBlockChain() : TestBlockChain(defaultGenesisBlock(), MiningType::Ethash) {}
+    TestBlockChain(TestBlock const& _genesisBlock, MiningType _mining);
 
-    void reset(TestBlock const& _genesisBlock);
+    void reset(TestBlock const& _genesisBlock, MiningType _mining);
     bool addBlock(TestBlock const& _block);
     vector<TestBlock> syncUncles(vector<TestBlock> const& _uncles);
     TestBlock const& topBlock() { return m_lastBlock; }
